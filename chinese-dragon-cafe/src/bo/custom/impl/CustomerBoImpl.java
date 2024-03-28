@@ -25,13 +25,13 @@ public class CustomerBoImpl implements CustomerBo {
 
     @Override
     public boolean deleteCustomer(String id) throws Exception {
-        return dao.delete(Integer.parseInt(id));
+        return dao.delete(id);
     }
 
     @Override
     public CustomerDTO getCustomer(String id) throws Exception {
 
-        Customer customer = dao.get(Integer.parseInt(id));
+        Customer customer = dao.get(id);
         if (customer != null) {
             return new CustomerDTO(customer.getId(), customer.getName(), customer.getContact());
         }

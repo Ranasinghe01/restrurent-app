@@ -17,7 +17,7 @@ public class ItemDaoImpl implements ItemDAO {
     }
 
     @Override
-    public boolean delete(Integer code) throws Exception {
+    public boolean delete(String code) throws Exception {
         return CrudUtil.execute("DELETE FROM Item WHERE code=?", code);
     }
 
@@ -28,7 +28,7 @@ public class ItemDaoImpl implements ItemDAO {
     }
 
     @Override
-    public Item get(Integer code) throws Exception {
+    public Item get(String code) throws Exception {
 
         ResultSet set = CrudUtil.execute("SELECT * From Item WHERE code=?", code);
 

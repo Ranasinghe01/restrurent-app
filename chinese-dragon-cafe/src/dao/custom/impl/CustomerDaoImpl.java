@@ -16,7 +16,7 @@ public class CustomerDaoImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean delete(Integer id) throws Exception {
+    public boolean delete(String id) throws Exception {
         return CrudUtil.execute("DELETE FROM Customer WHERE id=?", id);
     }
 
@@ -28,7 +28,7 @@ public class CustomerDaoImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer get(Integer id) throws Exception {
+    public Customer get(String id) throws Exception {
 
         ResultSet set = CrudUtil.execute("SELECT * FROM Customer WHERE id=?", id);
 

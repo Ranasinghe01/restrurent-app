@@ -6,7 +6,10 @@ import java.util.Optional;
 
 import bo.BoFactory;
 import bo.custom.CustomerBo;
+import dao.DaoFactory;
+import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
+import entity.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,8 +66,8 @@ public class CustomerController {
     private TableColumn<CustomerTM, Button> custDelete;
 
     CustomerBo bo;
-
-    ObservableList<CustomerTM> tmList = FXCollections.observableArrayList(); 
+    
+    private CustomerDAO dao = DaoFactory.getInstance().getDao(DaoFactory.DAOType.CUSTOMER);
     
     private void enableUI(boolean enable) {
         vBox.setDisable(!enable);
@@ -72,16 +75,19 @@ public class CustomerController {
         btnUpdate.setDisable(!enable);
     }
 
-    private String generateNewCustomerID() {
-        if(tmList.isEmpty()) return "C001";
+    // private String generateNewCustomerID() throws Exception {
 
-        String newID = tmList.get(tmList.size() - 1).getId()
-                    .replace("C", "") + 1;
-        return "C%03d".formatted(newID);
-    }
+    //       ArrayList<Customer> listID = dao.getCustomerID();    
+
+    //     if(listID.isEmpty()) return "C001";
+
+    //     String newID = listID.get(listID.size() - 1).getId()
+    //                 .replace("C", "") + 1;
+    //     return "C%03d".formatted(newID);
+    // }
 
     public void initialize() {
-
+    
         bo = BoFactory.getInstance().getBo(BoFactory.BoType.CUSTOMER);
 
         custID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -96,7 +102,8 @@ public class CustomerController {
     public void getCustomers() {
 
         try {
-            ArrayList<CustomerDTO> allCustomer = bo.getAllCustomer();          
+            ArrayList<CustomerDTO> allCustomer = bo.getAllCustomer();    
+            ObservableList<CustomerTM> tmList = FXCollections.observableArrayList();      
 
             for (CustomerDTO customer : allCustomer) {
                 Button btnDelete = new Button("Delete");
@@ -112,6 +119,12 @@ public class CustomerController {
                         btnDelete);
 
                 tmList.add(customerTM);
+
+                btnDelete.setDisable(true);
+                tblCustomer.getSelectionModel().selectedItemProperty()
+                .addListener((observable, previous, current) -> {
+                    btnDelete.setDisable(current == null);
+                });
 
                 btnDelete.setOnAction((e) -> {
                     ButtonType ok = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -149,7 +162,7 @@ public class CustomerController {
     @FXML
     void btnNewCustomerOnAction() {
         enableUI(true);
-        txtCustomerID.setText(generateNewCustomerID());
+        txtCustomerID.setText("C001");
         txtCustomerName.requestFocus();
     }
 
@@ -197,52 +210,6 @@ public class CustomerController {
 
     }
 
-    // load data using click event
-
-    // @FXML
-    // void btnViewOnAction(ActionEvent event) throws SQLException {
-
-    // // define the query
-
-    // PreparedStatement prepareStatement =
-    // DbConnection.getInstance().getConnection()
-    // .prepareStatement("SELECT * FROM Customer");
-
-    // get the result set
-
-    // ResultSet customerSet = prepareStatement.executeQuery();
-
-    // ArrayList<Customer> customerList = new ArrayList<Customer>();
-
-    // //add customer objects to the Array list
-
-    // while (customerSet.next()) {
-    // Customer customer = new Customer(
-    // customerSet.getInt(1),
-    // customerSet.getString(2),
-    // customerSet.getString(3),
-    // customerSet.getDouble(4));
-
-    // customerList.add(customer);
-    // }
-
-    // create observableList to add customer table model
-    // ObservableList<CustomerTM> tmList = FXCollections.observableArrayList();
-
-    // add from Array List to observableList
-
-    // for (Customer customer : customerList) {
-    // CustomerTM customerTM = new CustomerTM(
-    // customer.getId(),
-    // customer.getName(),
-    // customer.getAddress(),
-    // customer.getSalary());
-
-    // tmList.add(customerTM);
-    // }
-    // set observerlist to tabel
-    // tblCustomer.setItems(tmList);
-
     @FXML
     void btnUpdateOnAction(ActionEvent event) throws Exception {
 
@@ -261,6 +228,7 @@ public class CustomerController {
         if (!validate) return; 
 
         try {
+
             // get inserted data from the text fields
             String id = txtCustomerID.getText();
             String name = txtCustomerName.getText();

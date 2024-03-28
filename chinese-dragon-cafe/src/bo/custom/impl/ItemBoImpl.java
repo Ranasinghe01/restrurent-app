@@ -27,13 +27,13 @@ public class ItemBoImpl implements ItemBo {
 
     @Override
     public boolean deleteItem(String code) throws Exception {
-        return dao.delete(Integer.parseInt(code));
+        return dao.delete(code);
     }
 
     @Override
     public ItemDTO getItem(String code) throws Exception {
 
-        Item item = dao.get(Integer.parseInt(code));
+        Item item = dao.get(code);
         if (item != null) {
             return new ItemDTO(item.getCode(), item.getDescription(), item.getUnitPrice(), item.getQtyOnHand());
         }

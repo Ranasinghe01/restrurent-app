@@ -17,7 +17,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <VBox fx:id="vBox" layoutX="33.0" layoutY="108.0" prefHeight="126.0" prefWidth="172.0" spacing="10.0">
+      <VBox fx:id="vBox" layoutX="33.0" layoutY="108.0" prefHeight="143.0" prefWidth="230.0" spacing="10.0">
          <children>
             <TextField fx:id="txtCustomerID" editable="false" onAction="#txtCustomerIDOnAction" onKeyReleased="#txtIdOnKeyReleased" prefHeight="38.0" prefWidth="167.0" promptText="Customer ID">
                <font>
@@ -29,10 +29,10 @@
                   <Font size="19.0" />
                </font>
             </TextField>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="41.0" prefWidth="243.0">
                <children>
                   <Label prefHeight="43.0" prefWidth="50.0" text="+94 " />
-                  <TextField fx:id="txtContact" onKeyReleased="#txtContactOnKeyReleased" prefHeight="38.0" prefWidth="167.0" promptText="Contact">
+                  <TextField fx:id="txtContact" onKeyReleased="#txtContactOnKeyReleased" prefHeight="41.0" prefWidth="223.0" promptText="Contact">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -41,24 +41,24 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnSave" layoutX="235.0" layoutY="391.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="73.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>s
-      </Button>
-      <TableView fx:id="tblCustomer" layoutX="235.0" layoutY="108.0" prefHeight="262.0" prefWidth="518.0">
+      <TableView fx:id="tblCustomer" layoutX="278.0" layoutY="108.0" prefHeight="262.0" prefWidth="475.0">
         <columns>
-          <TableColumn fx:id="custID" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="custName" prefWidth="83.20001220703125" text="Name" />
-            <TableColumn fx:id="custContact" minWidth="1.5999755859375" prefWidth="121.5999755859375" text="Contact" />
-            <TableColumn id="btnDelete" fx:id="custDelete" minWidth="0.0" prefWidth="103.20001220703125" text="Delete" />
+          <TableColumn fx:id="custID" prefWidth="99.20001220703125" text="ID" />
+          <TableColumn fx:id="custName" prefWidth="169.5999755859375" text="Name" />
+            <TableColumn fx:id="custContact" minWidth="0.0" prefWidth="129.60003662109375" text="Contact" />
+            <TableColumn id="btnDelete" fx:id="custDelete" minWidth="0.0" prefWidth="72.0001220703125" text="Delete" />
         </columns>
       </TableView>
-      <Button fx:id="btnUpdate" layoutX="332.0" layoutY="390.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="42.0" prefWidth="97.0" style="-fx-background-color: #2980b9;" text="Update" textFill="#fcfcfc">
+      <Button fx:id="btnSave" layoutX="235.0" layoutY="391.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="21.0" prefWidth="86.0" style="-fx-background-color: #2ecc71;" text="SAVE" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="19.0" />
+            <Font size="15.0" />
+         </font>s
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="350.0" layoutY="390.0" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: #2980b9;" text="UPDATE" textFill="#fcfcfc">
+         <font>
+            <Font size="15.0" />
          </font></Button>
-      <Button layoutX="598.0" layoutY="37.0" mnemonicParsing="false" onAction="#btnNewCustomerOnAction" text="+ NEW CUSTOMER">
+      <Button layoutX="598.0" layoutY="37.0" mnemonicParsing="false" onAction="#btnNewCustomerOnAction" prefHeight="31.0" prefWidth="130.0" style="-fx-background-color: green;" text="+ NEW CUSTOMER" textFill="WHITE">
          <font>
             <Font size="13.0" />
          </font>
