@@ -3,7 +3,7 @@ CREATE DATABASE restaurant;
 USE restaurant;
 
 CREATE TABLE Customer(
-	id int NOT NULL,
+	id VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
 	contact int NOT NULL,
 	CONSTRAINT PRIMARY KEY (id)
@@ -21,7 +21,7 @@ CREATE TABLE Item(
 	CREATE TABLE Orders(
 		orderId VARCHAR(50) NOT NULL,
 		orderDate DATE NOT NULL,
-		customerID int NOT NULL,
+		customerID VARCHAR(20) NOT NULL,
 		CONSTRAINT PRIMARY KEY (orderId),
 		CONSTRAINT FOREIGN KEY (customerID) REFERENCES Customer(id)
 	);

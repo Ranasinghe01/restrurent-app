@@ -15,7 +15,7 @@ public class CustomerBoImpl implements CustomerBo {
     @Override
     public boolean saveCustomer(CustomerDTO dto) throws Exception {
 
-        return dao.save(new Customer(dto.getId(), dto.getName(), dto.getContact() ));
+        return dao.save(new Customer(dto.getId(), dto.getName(), dto.getContact()));
     }
 
     @Override

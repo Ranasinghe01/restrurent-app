@@ -73,11 +73,11 @@ public class CustomerController {
     }
 
     private String generateNewCustomerID() {
-        if(tmList.isEmpty()) return "C-001";
+        if(tmList.isEmpty()) return "C001";
 
-        int newID = Integer.parseInt(tmList.get(tmList.size() - 1).getId()
-                    .replace("C-", "")) + 1;
-        return "C-%03d".formatted(newID);
+        String newID = tmList.get(tmList.size() - 1).getId()
+                    .replace("C", "") + 1;
+        return "C%03d".formatted(newID);
     }
 
     public void initialize() {

@@ -11,7 +11,7 @@ public class CustomerDaoImpl implements CustomerDAO {
 
     @Override
     public boolean save(Customer customer) throws Exception {
-        return CrudUtil.execute("INSERT INTO Customer VALUES (?,?,?,?)",
+        return CrudUtil.execute("INSERT INTO Customer VALUES (?,?,?)",
                 customer.getId(), customer.getName(), customer.getContact());
     }
 
