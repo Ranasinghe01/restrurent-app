@@ -6,10 +6,7 @@ import java.util.Optional;
 
 import bo.BoFactory;
 import bo.custom.CustomerBo;
-import dao.DaoFactory;
-import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
-import entity.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.Validator;
 import view.tm.CustomerTM;
+import view.tm.ItemTM;
 
 public class CustomerController {
 
@@ -67,24 +65,11 @@ public class CustomerController {
 
     CustomerBo bo;
     
-    private CustomerDAO dao = DaoFactory.getInstance().getDao(DaoFactory.DAOType.CUSTOMER);
-    
     private void enableUI(boolean enable) {
         vBox.setDisable(!enable);
         btnSave.setDisable(!enable);
         btnUpdate.setDisable(!enable);
     }
-
-    // private String generateNewCustomerID() throws Exception {
-
-    //       ArrayList<Customer> listID = dao.getCustomerID();    
-
-    //     if(listID.isEmpty()) return "C001";
-
-    //     String newID = listID.get(listID.size() - 1).getId()
-    //                 .replace("C", "") + 1;
-    //     return "C%03d".formatted(newID);
-    // }
 
     public void initialize() {
     
@@ -159,10 +144,23 @@ public class CustomerController {
         }
     }
 
+    private String generateNewID() {
+
+        ObservableList<CustomerTM> customerList = tblCustomer.getItems();
+
+        if (customerList.isEmpty()) return "C001";
+
+        CustomerTM lastCustomer = customerList.get(customerList.size() - 1);
+        int lastId = Integer.parseInt(lastCustomer.getId().replace("C", ""));
+        int newID = lastId + 1;
+        return "C%03d".formatted(newID);
+    }
+
     @FXML
     void btnNewCustomerOnAction() {
         enableUI(true);
-        txtCustomerID.setText("C001");
+        txtCustomerID.setText(generateNewID());
+        txtContact.setText("+94 ");
         txtCustomerName.requestFocus();
     }
 
@@ -171,6 +169,14 @@ public class CustomerController {
 
         boolean validate = true;
 
+        String contactChar = txtContact.getText().substring(6,13);
+        for (char c : contactChar.toCharArray()) {
+            if ((!Character.isDigit(c))) {
+                txtContact.setStyle("-fx-focus-color:red");
+                txtContact.requestFocus();
+                validate = false;
+            }
+        }
         if (txtContact.getText().isEmpty()) {
             txtContact.setStyle("-fx-border-color:red");
             txtContact.requestFocus();
@@ -187,7 +193,7 @@ public class CustomerController {
             // get inserted data from the text fields
             String id = txtCustomerID.getText();
             String name = txtCustomerName.getText();
-            int contact = Integer.parseInt(txtContact.getText());
+            String contact = txtContact.getText();
 
             CustomerDTO customerDTO = new CustomerDTO(id, name, contact);
 
@@ -197,6 +203,12 @@ public class CustomerController {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Customer is Saved");
                 alert.show();
                 getCustomers();
+
+                for (TextField txt : new TextField[] {txtContact, txtCustomerID, txtCustomerName}) {
+                    txt.clear();
+                }
+
+                enableUI(false);
 
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Customer is not Saved");
@@ -214,7 +226,7 @@ public class CustomerController {
     void btnUpdateOnAction(ActionEvent event) throws Exception {
 
         boolean validate = true;
-
+        
         if (txtContact.getText().isEmpty()) {
             txtContact.setStyle("-fx-border-color:red");
             txtContact.requestFocus();
@@ -232,7 +244,7 @@ public class CustomerController {
             // get inserted data from the text fields
             String id = txtCustomerID.getText();
             String name = txtCustomerName.getText();
-            int contact = Integer.parseInt(txtContact.getText());
+            String contact = txtContact.getText();
 
             CustomerDTO customerDTO = new CustomerDTO(id, name, contact);
 
@@ -279,7 +291,7 @@ public class CustomerController {
     @FXML
     void txtIdOnKeyReleased(KeyEvent event) {
 
-        if (Validator.validateTextField(txtCustomerID, "^[0-9]{1,}$")) {
+        if (Validator.validateTextField(txtCustomerID, "^[0-9]{1,}$, ^[A-z| ]{1,}$")) {
             txtCustomerID.setStyle("-fx-focus-color:green");
 
         } else {
@@ -302,14 +314,10 @@ public class CustomerController {
     @FXML
     void txtContactOnKeyReleased(KeyEvent event) {
 
-        if (Validator.validateTextField(txtContact, "^[0-9]{1,}$") 
-                && (!(txtContact.getText().length() < 9))) {
+        if (txtContact.getText().length() == 13 && txtContact.getText().startsWith("+")) {
             txtContact.setStyle("-fx-focus-color:green");
-
-        } else {
+        }else {
             txtContact.setStyle("-fx-focus-color:red");
         }
-
     }
-
 }

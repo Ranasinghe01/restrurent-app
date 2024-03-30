@@ -5,7 +5,7 @@ USE restaurant;
 CREATE TABLE Customer(
 	id VARCHAR(20) NOT NULL,
 	name VARCHAR(50) NOT NULL,
-	contact int NOT NULL,
+	contact VARCHAR(50) NOT NULL,
 	CONSTRAINT PRIMARY KEY (id)
 );
 

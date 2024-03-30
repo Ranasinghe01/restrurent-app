@@ -2,16 +2,19 @@ package controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Optional;
 
 import bo.BoFactory;
 import bo.custom.ItemBo;
 import dto.ItemDTO;
+import entity.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -21,7 +24,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import util.Validator;
 import view.tm.ItemTM;
 
 public class ItemController {
@@ -55,6 +63,15 @@ public class ItemController {
 
     @FXML
     private TextField txtUnitPrice;
+    
+    @FXML
+    private VBox vBoxTextFields;
+
+    @FXML
+    private HBox btnSaveUpdate;
+
+        @FXML
+    private AnchorPane container;
 
     ItemBo bo;
 
@@ -69,7 +86,29 @@ public class ItemController {
         colDelete.setCellValueFactory(new PropertyValueFactory<>("btnDelete"));
 
         getItems();
+        vBoxTextFields.setDisable(true);
+        btnSaveUpdate.setDisable(true);
 
+    }
+
+    private String generateNewItemCode(){
+
+        ObservableList<ItemTM> itemList = tblItem.getItems();
+
+        if (itemList.isEmpty()) return "IC001";
+
+       ItemTM lastItem = itemList.get(itemList.size() - 1);
+       int lastId = Integer.parseInt(lastItem.getCode().replace("IC", ""));
+       int newID = lastId + 1;
+        return "IC%03d".formatted(newID);
+    }
+
+    @FXML
+    void btnNewItemOnAction(ActionEvent event) {
+        vBoxTextFields.setDisable(false);
+        btnSaveUpdate.setDisable(false);
+        txtItemCode.setText(generateNewItemCode());
+        txtDescription.requestFocus();
     }
 
     public void getItems() {
@@ -121,7 +160,7 @@ public class ItemController {
                 });
             }
 
-            tblItem.setItems(tmList);
+            tblItem.setItems(tmList);       
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
@@ -131,6 +170,35 @@ public class ItemController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+
+        boolean validate = true;
+
+        for (Node node : vBoxTextFields.lookupAll(".error")) {
+            node.getStyleClass().remove("error");
+        }
+
+        if (txtQTY.getText().strip().isEmpty()) {
+            txtQTY.setStyle("-fx-border-color:red");
+            txtQTY.requestFocus();
+            validate = false;
+        } 
+        if (txtUnitPrice.getText().strip().isEmpty()) {
+            txtUnitPrice.setStyle("-fx-border-color:red");
+            txtUnitPrice.requestFocus();
+            validate = false;
+        }
+        if (txtDescription.getText().isEmpty()) {
+            txtDescription.setStyle("-fx-border-color:red");
+            txtDescription.requestFocus();
+            validate = false;
+        }
+        if (txtItemCode.getText().isEmpty()) {
+            txtItemCode.setStyle("-fx-border-color:red");
+            txtItemCode.requestFocus();
+            validate = false;
+        }
+        
+        if (!validate) return; 
 
         try {
 
@@ -147,6 +215,12 @@ public class ItemController {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Item is Saved");
                 alert.show();
                 getItems();
+
+                for (TextField textField : new TextField[] {txtDescription, txtItemCode, txtQTY, txtUnitPrice}) {
+                    textField.clear();
+                }
+
+                vBoxTextFields.setDisable(true);
 
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Item is not Saved");
@@ -224,6 +298,45 @@ public class ItemController {
         } catch (Exception e3) {
             Alert alert = new Alert(AlertType.ERROR, "Exeption Search" + e3.getMessage());
             alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void descriptionOnKeyRelesed(KeyEvent event) {
+        
+        if (Validator.validateTextField(txtDescription, "^[A-z| ]{1,}$")
+                &&(!(txtDescription.getText().strip().length() < 4))) {
+            txtDescription.setStyle("-fx-focus-color:green");
+        } else {
+            txtDescription.setStyle("-fx-focus-color:red");
+        }
+    }
+
+    @FXML
+    void itemCodeOnKeyRelesed(KeyEvent event) {
+        if (Validator.validateTextField(txtItemCode, "^[A-z| ]{1,}$,^[0-9]{1,}$")
+            &&(txtItemCode.getText().strip().length() == 5 )) {
+        txtItemCode.setStyle("-fx-focus-color:green");
+        } else {
+        txtItemCode.setStyle("-fx-focus-color:red");
+        }
+    }
+
+    @FXML
+    void unitPriceOnKeyRelesed(KeyEvent event) {
+        if (Validator.validateTextField(txtUnitPrice, "^[0-9]{1,}$")) {
+            txtUnitPrice.setStyle("-fx-focus-color:green");
+        }else {
+            txtUnitPrice.setStyle("-fx-focus-color:red");
+        }
+    }
+
+    @FXML
+    void qtyOnKeyRelesed(KeyEvent event) {
+        if (Validator.validateTextField(txtQTY, "^[0-9]{1,}$")) {
+            txtQTY.setStyle("-fx-focus-color:green");
+        }else {
+            txtQTY.setStyle("-fx-focus-color:red");
         }
     }
 }

@@ -4,13 +4,13 @@ public class CustomerDTO {
 
     private String id;
     private String name;
-    private int contact;
+    private String contact;
  
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(String id, String name, int contact) {
+    public CustomerDTO(String id, String name, String contact) {
         this.id = id;
         this.name = name;
         this.contact = contact;
@@ -36,11 +36,11 @@ public class CustomerDTO {
         this.name = name;
     }
 
-    public int getContact() {
+    public String getContact() {
         return contact;
     }
 
-    public void setContact(int contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 

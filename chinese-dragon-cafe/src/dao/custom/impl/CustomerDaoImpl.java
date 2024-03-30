@@ -23,7 +23,7 @@ public class CustomerDaoImpl implements CustomerDAO {
     @Override
     public boolean update(Customer customer) throws Exception {
 
-        return CrudUtil.execute("UPDATE Customer SET name=?, address=?, salary=? WHERE id=?",
+        return CrudUtil.execute("UPDATE Customer SET id=?, name=?, contact=? WHERE id=?",
                 customer.getName(), customer.getContact(), customer.getId());
     }
 
@@ -35,7 +35,7 @@ public class CustomerDaoImpl implements CustomerDAO {
         if (set.next()) {
             return new Customer(
                     set.getString(1), set.getString(2),
-                    set.getInt(3));
+                    set.getString(3));
         }
         return null;
     }
@@ -49,7 +49,7 @@ public class CustomerDaoImpl implements CustomerDAO {
         while (set.next()) {
             customerList.add(new Customer(
                     set.getString(1), set.getString(2),
-                    set.getInt(3)));
+                    set.getString(3)));
         }
 
         return customerList;

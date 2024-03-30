@@ -6,13 +6,13 @@ public class CustomerTM {
 
     private String id;
     private String name;
-    private int contact;
+    private String contact;
     private Button btnDelete;
 
     public CustomerTM() {
     }
 
-    public CustomerTM(String id, String name, int contact, Button btnDelete) {
+    public CustomerTM(String id, String name, String contact, Button btnDelete) {
         this.id = id;
         this.name = name;
         this.contact = contact;
@@ -35,11 +35,11 @@ public class CustomerTM {
         this.name = name;
     }
 
-    public int getContact() {
+    public String getContact() {
         return contact;
     }
 
-    public void setContact(int contact) {
+    public void setContact(String contact) {
         this.contact = contact;
     }
 
