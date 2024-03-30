@@ -26,7 +26,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import util.Validator;
 import view.tm.CustomerTM;
-import view.tm.ItemTM;
 
 public class CustomerController {
 

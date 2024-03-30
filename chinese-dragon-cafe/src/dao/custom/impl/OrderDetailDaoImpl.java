@@ -33,5 +33,4 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
     public ArrayList<OrderDetail> getAll() throws Exception {
         return null;
     }
-
 }

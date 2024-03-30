@@ -15,6 +15,10 @@ public class Order implements SuperEntity {
         this.customerID = customerID;
     }
 
+    public Order(String orderID) {
+        this.orderID = orderID;
+    }
+
     public String getOrderID() {
         return orderID;
     }

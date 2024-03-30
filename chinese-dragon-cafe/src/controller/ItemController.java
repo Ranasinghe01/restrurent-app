@@ -2,13 +2,11 @@ package controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Optional;
 
 import bo.BoFactory;
 import bo.custom.ItemBo;
 import dto.ItemDTO;
-import entity.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

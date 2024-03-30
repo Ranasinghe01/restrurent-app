@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dao.CrudUtil;
@@ -35,4 +36,15 @@ public class OrderDaoImpl implements OrderDAO {
         return null;
     }
 
+     @Override
+    public ArrayList<Order> getOrderID() throws Exception {
+        
+        ResultSet set = CrudUtil.execute("SELECT orderId FROM Orders ORDER BY orderId");
+        ArrayList<Order> orderIDList = new ArrayList<>();
+
+        while (set.next()) {
+            orderIDList.add(new Order(set.getString(1)));
+        }
+        return orderIDList;
+    }
 }

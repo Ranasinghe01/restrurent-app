@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemController">
    <children>
-      <Label layoutX="41.0" layoutY="14.0" prefHeight="46.0" prefWidth="155.0" text="Item View " textFill="#41a4e8">
+      <Label layoutX="41.0" layoutY="14.0" prefHeight="46.0" prefWidth="278.0" text="DASHBOARD ITEM" textFill="#41a4e8">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -91,14 +91,14 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <HBox fx:id="btnSaveUpdate" layoutX="55.0" layoutY="334.0" prefHeight="46.0" prefWidth="203.0" spacing="20.0">
+      <HBox fx:id="btnSaveUpdate" layoutX="48.0" layoutY="371.0" prefHeight="31.0" prefWidth="203.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="41.0" prefWidth="73.0" style="-fx-background-color: #2ecc71;" text="SAVE" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="31.0" prefWidth="74.0" style="-fx-background-color: #2ecc71;" text="SAVE" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="42.0" prefWidth="98.0" style="-fx-background-color: #2980b9;" text="UPDATE" textFill="#fcfcfc">
+            <Button mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="32.0" prefWidth="98.0" style="-fx-background-color: #2980b9;" text="UPDATE" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

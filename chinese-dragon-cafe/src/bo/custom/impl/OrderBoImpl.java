@@ -12,6 +12,7 @@ import db.DbConnection;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
 import entity.Order;
+import entity.OrderDetail;
 
 public class OrderBoImpl implements OrderBo {
 
@@ -30,6 +31,7 @@ public class OrderBoImpl implements OrderBo {
             boolean isDetailsSaved = detailBO.saveOrderDetail(orderDetailDTOs);
             boolean isUpdated = itemBo.updateWhenOrder(orderDetailDTOs);
 
+
             if (isSaved & isDetailsSaved & isUpdated) {
                 DbConnection.getInstance().getConnection().commit();
                 return true;
@@ -46,6 +48,18 @@ public class OrderBoImpl implements OrderBo {
         } finally {
             DbConnection.getInstance().getConnection().setAutoCommit(true);
         }
+    }
+
+    @Override
+    public ArrayList<OrderDTO> getAllOrderID() throws Exception {
+        
+        ArrayList<Order> listOrderID = orderDAO.getOrderID();
+        ArrayList<OrderDTO> dtoListOrderID = new ArrayList<>();
+
+        for (Order orderDTO : listOrderID) {
+            dtoListOrderID.add(new OrderDTO(orderDTO.getOrderID()));
+        }
+        return dtoListOrderID;
     }
 
 }

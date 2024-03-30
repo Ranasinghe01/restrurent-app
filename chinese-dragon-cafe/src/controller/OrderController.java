@@ -1,6 +1,8 @@
 package controller;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import bo.BoFactory;
 import bo.custom.CustomerBo;
 import bo.custom.ItemBo;
 import bo.custom.OrderBo;
+import bo.custom.OrderDetailBo;
 import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
@@ -92,20 +95,46 @@ public class OrderController {
     @FXML
     private TextField txtOrderID;
 
+    @FXML
+    private Label lblTime;
+
     CustomerBo customerBo;
     ItemBo itemBo;
     OrderBo bo;
 
-    public void initialize() {
+    private String generateNewOrdrID() throws Exception {
+
+        ArrayList<OrderDTO> orderIDList;
+
+        try {
+
+            orderIDList = bo.getAllOrderID();
+
+            OrderDTO lastID = orderIDList.get(orderIDList.size() - 1); 
+            int intID = Integer.parseInt(lastID.getOrderID().replace("OID", ""));
+            int newID = intID + 1;
+            return "OID%03d".formatted(newID); 
+
+        } catch (Exception e) {
+            Alert alert1 = new Alert(AlertType.ERROR, "SQL Exception" + e.getMessage());
+            alert1.showAndWait();
+        }
+        return null;
+    }
+
+    public void initialize() throws Exception {
 
         customerBo = BoFactory.getInstance().getBo(BoFactory.BoType.CUSTOMER);
         itemBo = BoFactory.getInstance().getBo(BoFactory.BoType.ITEM);
         bo = BoFactory.getInstance().getBo(BoFactory.BoType.ORDER);
 
         lblDate.setText(String.valueOf(LocalDate.now()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        lblTime.setText(LocalTime.now().format(formatter));
 
         loadCustomerID();
         loadItemCode();
+        txtOrderID.setText(generateNewOrdrID());
     }
 
     ObservableList<OrderTM> tmList = FXCollections.observableArrayList();
@@ -151,7 +180,6 @@ public class OrderController {
                             return;
                         }
                     }
-
                 }
             }
 
@@ -189,12 +217,27 @@ public class OrderController {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
+
         try {
             boolean isSaved = bo.saveOrder(getOrder(), getOrderDetail());
 
             if (isSaved) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Order is Saved");
                 alert.show();
+
+                for (TextField txt : new TextField[] {txtBuyingQTY, txtOrderID}) {
+                    txt.clear();
+                }
+                
+                for (Label label : new Label[] {lblContact, lblDescription, lblName, lblQTYOnHand, lblUnitPrice, lblSubTotal}) {
+                    label.setText(null);
+                }
+
+                cmbCustomerID.setValue(null);
+                cmbItemCode.setValue(null);
+
+                tblOrder.getItems().clear();
+                txtOrderID.setText(generateNewOrdrID());
 
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Order is not Saved");
@@ -204,7 +247,6 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public OrderDTO getOrder() {
