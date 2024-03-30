@@ -12,7 +12,6 @@ import db.DbConnection;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
 import entity.Order;
-import entity.OrderDetail;
 
 public class OrderBoImpl implements OrderBo {
 

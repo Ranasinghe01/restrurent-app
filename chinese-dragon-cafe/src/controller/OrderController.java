@@ -10,7 +10,6 @@ import bo.BoFactory;
 import bo.custom.CustomerBo;
 import bo.custom.ItemBo;
 import bo.custom.OrderBo;
-import bo.custom.OrderDetailBo;
 import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
