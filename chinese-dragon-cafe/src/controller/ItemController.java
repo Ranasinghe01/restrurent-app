@@ -255,6 +255,11 @@ public class ItemController {
 
             if (isUpdated) {
                 new Alert(AlertType.CONFIRMATION, " Item is Updated ").showAndWait();
+
+                for (TextField txt : new TextField[] {txtDescription, txtItemCode, txtQTY, txtUnitPrice}) {
+                    txt.clear();
+                }
+                txtItemCode.setText(generateNewItemCode());
                 getItems();
 
             } else {

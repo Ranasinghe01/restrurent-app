@@ -14,25 +14,27 @@ public class MainController {
     void btnCustomerOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/CustomerView.fxml"))));
-        stage.setTitle("Customer Form");
+        stage.setResizable(false);
         stage.show();
+        stage.centerOnScreen();
     }
 
     @FXML
     void btnItemOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/ItemView.fxml"))));
-        stage.setTitle("Item Form");
+        stage.setResizable(false);
         stage.show();
-
+        stage.centerOnScreen();
     }
 
     @FXML
     void btnOrderOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/OrderView.fxml"))));
-        stage.setTitle("Order Form");
+        stage.setResizable(false);
         stage.show();
+        stage.centerOnScreen();
 
     }
 

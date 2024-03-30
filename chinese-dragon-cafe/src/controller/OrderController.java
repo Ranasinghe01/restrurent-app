@@ -14,6 +14,9 @@ import dto.CustomerDTO;
 import dto.ItemDTO;
 import dto.OrderDTO;
 import dto.OrderDetailDTO;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import util.Validator;
 import view.tm.OrderTM;
 
@@ -128,8 +132,14 @@ public class OrderController {
         bo = BoFactory.getInstance().getBo(BoFactory.BoType.ORDER);
 
         lblDate.setText(String.valueOf(LocalDate.now()));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        lblTime.setText(LocalTime.now().format(formatter));
+
+        lblTime.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        Timeline t1Time = new Timeline();
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), 
+                ae -> lblTime.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
+        t1Time.getKeyFrames().add(frame);
+        t1Time.setCycleCount(Animation.INDEFINITE);
+        t1Time.play();
 
         loadCustomerID();
         loadItemCode();

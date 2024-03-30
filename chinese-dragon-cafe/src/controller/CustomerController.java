@@ -252,6 +252,14 @@ public class CustomerController {
             if (isUpdated) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Customer is Updated");
                 alert.show();
+
+                for (TextField txt : new TextField[] {txtContact, txtCustomerID, txtCustomerName}) {
+                    txt.clear();
+                }
+                
+                txtCustomerID.setText(generateNewID());
+                getCustomers();
+
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Customer is not UPdated");
                 alert.show();
@@ -273,8 +281,9 @@ public class CustomerController {
 
             if (dto != null) {
 
+                txtCustomerID.setText(dto.getId());
                 txtCustomerName.setText(dto.getName());
-                txtContact.setText(String.valueOf(dto.getContact()));
+                txtContact.setText(dto.getContact());
 
             } else {
                 new Alert(AlertType.ERROR, "Customer Not Found, Please check the customer ID and try again !").show();

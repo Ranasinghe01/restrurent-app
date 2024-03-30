@@ -22,9 +22,8 @@ public class CustomerDaoImpl implements CustomerDAO {
 
     @Override
     public boolean update(Customer customer) throws Exception {
-
         return CrudUtil.execute("UPDATE Customer SET id=?, name=?, contact=? WHERE id=?",
-                customer.getName(), customer.getContact(), customer.getId());
+                customer.getId(), customer.getName(), customer.getContact(), customer.getId());
     }
 
     @Override
