@@ -27,16 +27,6 @@ public class OrderDaoImpl implements OrderDAO {
     }
 
     @Override
-    public Order get(String id) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Order> getAll() throws Exception {
-        return null;
-    }
-
-     @Override
     public ArrayList<Order> getOrderID() throws Exception {
         
         ResultSet set = CrudUtil.execute("SELECT orderId FROM Orders ORDER BY orderId");
@@ -47,4 +37,24 @@ public class OrderDaoImpl implements OrderDAO {
         }
         return orderIDList;
     }
+
+    @Override
+    public ArrayList<Order> getAll() throws Exception {
+        
+        ResultSet set = CrudUtil.execute("SELECT * FROM orders");
+        ArrayList<Order> orderList = new ArrayList<>();
+
+        while (set.next()) {
+            orderList.add(new Order(
+                set.getString(1), set.getString(2),
+                set.getString(3)));
+        }
+        return orderList;
+    }
+
+    @Override
+    public Order get(String id) throws Exception {
+        return null;
+    }
+    
 }

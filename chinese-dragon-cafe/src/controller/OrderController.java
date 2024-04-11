@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -207,6 +208,7 @@ public class OrderController {
                     if (result.orElse(no) == ok) {
                         tmList.remove(orderTM);
                         getTotal();
+                        txtBuyingQTY.clear();
                         tblOrder.refresh();
                     }
 
@@ -232,22 +234,28 @@ public class OrderController {
 
             if (isSaved) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Order is Saved");
-                alert.show();
+                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(ok);
 
-                for (TextField txt : new TextField[] {txtBuyingQTY, txtOrderID}) {
-                    txt.clear();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ok) {
+                    
+                    for (TextField txt : new TextField[] {txtBuyingQTY, txtOrderID}) {
+                        txt.clear();
+                    }
+                    
+                    for (Label label : new Label[] {lblContact, lblDescription, lblName, lblQTYOnHand, lblUnitPrice, lblSubTotal}) {
+                        label.setText(null);
+                    }
+    
+                    cmbCustomerID.setValue(null);
+                    cmbItemCode.setValue(null);
+    
+                    tblOrder.getItems().clear();
+                    txtOrderID.setText(generateNewOrdrID());
+    
                 }
-                
-                for (Label label : new Label[] {lblContact, lblDescription, lblName, lblQTYOnHand, lblUnitPrice, lblSubTotal}) {
-                    label.setText(null);
-                }
-
-                cmbCustomerID.setValue(null);
-                cmbItemCode.setValue(null);
-
-                tblOrder.getItems().clear();
-                txtOrderID.setText(generateNewOrdrID());
-
+               
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Order is not Saved");
                 alert.show();

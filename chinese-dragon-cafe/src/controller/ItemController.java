@@ -1,6 +1,5 @@
 package controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -21,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -145,19 +145,24 @@ public class ItemController {
 
                             if (bo.deleteItem(itemTM.getCode())) {
 
-                                new Alert(AlertType.CONFIRMATION, "Item is Deleted ! ").show();
-                                getItems();
-                                return;
+                                Alert alertDeleted = new Alert(AlertType.CONFIRMATION, "Item is Deleted ! ");
+                                ButtonType ok2 = new ButtonType("OK", ButtonData.OK_DONE);
+                                alertDeleted.getButtonTypes().setAll(ok2);
+
+                                Optional<ButtonType> result2  = alertDeleted.showAndWait();
+                                if (result2.isPresent() && result2.get() == ok2) {
+
+                                    getItems();
+                                    return;
+                                }
                             }
                         }
 
                     } catch (Exception e2) {
                         new Alert(AlertType.ERROR, "Exception Delete" + e2.getMessage()).show();
                     }
-
                 });
             }
-
             tblItem.setItems(tmList);       
 
         } catch (Exception e) {
@@ -211,8 +216,13 @@ public class ItemController {
 
             if (isSaved) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Item is Saved");
-                alert.show();
-                getItems();
+                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(ok);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ok) {
+
+                    getItems();
 
                 for (TextField textField : new TextField[] {txtDescription, txtItemCode, txtQTY, txtUnitPrice}) {
                     textField.clear();
@@ -220,21 +230,15 @@ public class ItemController {
 
                 vBoxTextFields.setDisable(true);
 
+                }
+
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Item is not Saved");
                 alert.show();
             }
 
-        } catch (SQLException e) {
-            Alert alert = new Alert(AlertType.ERROR, "SQL Exception" + e.getMessage());
-            alert.showAndWait();
-
-        } catch (ClassNotFoundException e1) {
-            Alert alert = new Alert(AlertType.ERROR, "Class Not Found Exception" + e1.getMessage());
-            alert.showAndWait();
-
-        } catch (Exception e8) {
-            Alert alert = new Alert(AlertType.ERROR, "Exception" + e8.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -254,28 +258,29 @@ public class ItemController {
             boolean isUpdated = bo.updateItem(itemDTO);
 
             if (isUpdated) {
-                new Alert(AlertType.CONFIRMATION, " Item is Updated ").showAndWait();
+                Alert alert = new Alert(AlertType.CONFIRMATION, " Item is Updated ");
+                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(ok);
 
-                for (TextField txt : new TextField[] {txtDescription, txtItemCode, txtQTY, txtUnitPrice}) {
-                    txt.clear();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ok) {
+
+                    getItems();
+
+                    for (TextField txt : new TextField[] {txtDescription, txtItemCode, txtQTY, txtUnitPrice}) {
+                        txt.clear();
+                    }
+
+                    txtItemCode.setText(generateNewItemCode());
+
                 }
-                txtItemCode.setText(generateNewItemCode());
-                getItems();
 
             } else {
                 new Alert(AlertType.ERROR, "Item is Not Updated ").showAndWait();
             }
 
-        } catch (SQLException e7) {
-            Alert alert = new Alert(AlertType.ERROR, "SQL Exception" + e7.getMessage());
-            alert.showAndWait();
-
-        } catch (ClassNotFoundException e6) {
-            Alert alert = new Alert(AlertType.ERROR, "Class Not Found Exception" + e6.getMessage());
-            alert.showAndWait();
-
-        } catch (Exception e9) {
-            Alert alert = new Alert(AlertType.ERROR, "Exception" + e9.getMessage());
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
             alert.showAndWait();
         }
     }

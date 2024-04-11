@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -122,9 +123,16 @@ public class CustomerController {
 
                             if (bo.deleteCustomer(customerTM.getId())) {
 
-                                new Alert(AlertType.CONFIRMATION, "Customer is Deleted ! ").show();
-                                getCustomers();
-                                return;
+                                Alert alertDeleted = new Alert(AlertType.CONFIRMATION, "Customer is Deleted ! ");       
+                                ButtonType ok2 = new ButtonType("OK", ButtonData.OK_DONE);
+                                alertDeleted.getButtonTypes().setAll(ok2);
+
+                                Optional<ButtonType> result2 = alertDeleted.showAndWait();
+                                if (result2.isPresent() && result2.get() == ok2) {
+                                    
+                                    getCustomers();
+                                    return;
+                                }
                             }
                         }
 
@@ -134,7 +142,6 @@ public class CustomerController {
                     }
                 });
             }
-
             tblCustomer.setItems(tmList);
 
         } catch (Exception e) {
@@ -200,14 +207,21 @@ public class CustomerController {
 
             if (isSaved) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Customer is Saved");
-                alert.show();
-                getCustomers();
 
-                for (TextField txt : new TextField[] {txtContact, txtCustomerID, txtCustomerName}) {
-                    txt.clear();
+                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(ok);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ok) {
+
+                    getCustomers();
+
+                    for (TextField txt : new TextField[] {txtContact, txtCustomerID, txtCustomerName}) {
+                        txt.clear();
+                    }
+    
+                    enableUI(false);
                 }
-
-                enableUI(false);
 
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Customer is not Saved");
@@ -251,14 +265,21 @@ public class CustomerController {
 
             if (isUpdated) {
                 Alert alert = new Alert(AlertType.CONFIRMATION, "Customer is Updated");
-                alert.show();
-
+                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(ok);
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ok) {
+                    
+                    getCustomers();
+                    
                 for (TextField txt : new TextField[] {txtContact, txtCustomerID, txtCustomerName}) {
                     txt.clear();
                 }
-                
+
                 txtCustomerID.setText(generateNewID());
-                getCustomers();
+
+                }
 
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Customer is not UPdated");

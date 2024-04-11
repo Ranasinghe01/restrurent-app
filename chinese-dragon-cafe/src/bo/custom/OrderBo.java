@@ -10,4 +10,6 @@ public interface OrderBo {
     public boolean saveOrder(OrderDTO dto, ArrayList<OrderDetailDTO> orderDetailDTOs) throws Exception;
 
     public ArrayList<OrderDTO> getAllOrderID() throws Exception;
+
+    public ArrayList<OrderDTO> getAllOrder() throws Exception;
 }

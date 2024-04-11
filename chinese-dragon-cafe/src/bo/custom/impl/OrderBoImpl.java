@@ -61,4 +61,17 @@ public class OrderBoImpl implements OrderBo {
         return dtoListOrderID;
     }
 
+    @Override
+    public ArrayList<OrderDTO> getAllOrder() throws Exception {
+        
+        ArrayList<Order> listOrders = orderDAO.getAll();
+        ArrayList<OrderDTO> dtoListOrders = new ArrayList<>();
+
+        for (Order orderDTO : listOrders) {
+            dtoListOrders.add(new OrderDTO(
+                orderDTO.getOrderID(), orderDTO.getOrderDate(),
+                orderDTO.getCustomerID()));
+        }
+        return dtoListOrders;
+    }
 }
