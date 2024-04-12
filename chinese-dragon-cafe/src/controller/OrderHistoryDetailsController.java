@@ -34,7 +34,7 @@ public class OrderHistoryDetailsController {
 
     OrderDetailBo bo;
 
-
+    
     public void initialize() {
 
         bo = BoFactory.getInstance().getBo(BoFactory.BoType.ORDER_DETAIL);
