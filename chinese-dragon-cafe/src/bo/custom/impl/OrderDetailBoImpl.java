@@ -31,4 +31,21 @@ public class OrderDetailBoImpl implements OrderDetailBo {
                 orderDetailDTO.getCode(),
                 orderDetailDTO.getQty(), orderDetailDTO.getUnitPrice()));
     }
+
+    @Override
+    public ArrayList<OrderDetailDTO> getAllOrderDetails() throws Exception {
+        
+        ArrayList<OrderDetail> listOrderDetails = orderDetailDAO.getAll();
+        ArrayList<OrderDetailDTO> dtoListOrderDetails = new ArrayList<>();
+
+        for (OrderDetail orderDetailDTO : listOrderDetails) {
+            dtoListOrderDetails.add(new OrderDetailDTO(
+                orderDetailDTO.getOrderID(),
+                orderDetailDTO.getCode(),
+                orderDetailDTO.getQty(),
+                orderDetailDTO.getUnitPrice()
+            ));
+        }
+        return dtoListOrderDetails;
+    }
 }

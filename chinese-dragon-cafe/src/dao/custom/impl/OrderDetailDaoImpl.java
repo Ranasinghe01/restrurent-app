@@ -1,5 +1,6 @@
 package dao.custom.impl;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dao.CrudUtil;
@@ -31,6 +32,18 @@ public class OrderDetailDaoImpl implements OrderDetailDAO {
 
     @Override
     public ArrayList<OrderDetail> getAll() throws Exception {
-        return null;
+
+        ResultSet set =  CrudUtil.execute("SELECT * FROM OrderDetail");
+        ArrayList<OrderDetail> orderDetailsList = new ArrayList<>();
+
+        while (set.next()) {
+            orderDetailsList.add(new OrderDetail(
+                set.getString(1),
+                set.getString(2),
+                set.getInt(3),
+                set.getDouble(4)
+            ));
+        }
+        return orderDetailsList;
     }
 }
