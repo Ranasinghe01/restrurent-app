@@ -6,13 +6,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="User Management ">
          <font>
@@ -43,8 +44,12 @@
             </TextField>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Admin" />
-                  <RadioButton mnemonicParsing="false" text="User" />
+                  <RadioButton fx:id="rdAdmin" mnemonicParsing="false" text="Admin">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="grpRole" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="rdUser" mnemonicParsing="false" text="User" toggleGroup="$grpRole" />
                </children>
             </HBox>
          </children>
@@ -69,12 +74,26 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="tblUser" layoutX="281.0" layoutY="118.0" prefHeight="408.0" prefWidth="430.0">
+      <TableView fx:id="tblUser" layoutX="281.0" layoutY="118.0" prefHeight="349.0" prefWidth="430.0">
         <columns>
           <TableColumn fx:id="username" prefWidth="149.60003662109375" text="Username" />
           <TableColumn fx:id="password" prefWidth="178.39996337890625" text="Password" />
             <TableColumn fx:id="role" prefWidth="102.39996337890625" text="Role" />
         </columns>
       </TableView>
+      <HBox layoutX="34.0" layoutY="434.0" prefHeight="31.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="21.0" prefWidth="86.0" style="-fx-background-color: #2ecc71;" text="SAVE" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#btnUpdateOnAction" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: #2980b9;" text="UPDATE" textFill="#fcfcfc">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
