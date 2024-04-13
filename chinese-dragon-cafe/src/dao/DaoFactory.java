@@ -4,6 +4,7 @@ import dao.custom.impl.CustomerDaoImpl;
 import dao.custom.impl.ItemDaoImpl;
 import dao.custom.impl.OrderDaoImpl;
 import dao.custom.impl.OrderDetailDaoImpl;
+import dao.custom.impl.UserDaoImpl;
 
 public class DaoFactory {
 
@@ -18,7 +19,7 @@ public class DaoFactory {
     }
 
     public enum DAOType {
-        CUSTOMER, ITEM, ORDER, ORDER_DETAIL
+        CUSTOMER, ITEM, ORDER, ORDER_DETAIL, USER
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +36,9 @@ public class DaoFactory {
 
             case ORDER_DETAIL:
                 return (T) new OrderDetailDaoImpl();
+
+            case USER:
+                return (T) new UserDaoImpl();
 
             default:
                 return null;
