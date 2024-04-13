@@ -17,6 +17,7 @@ public class SplashViewController {
     @SuppressWarnings("unchecked")
     public void initialize() {
 
+        @SuppressWarnings("rawtypes")
         Task initTask = new Task<>() {
 
             @Override

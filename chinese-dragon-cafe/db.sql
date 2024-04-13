@@ -36,3 +36,11 @@ CREATE TABLE Item(
 		CONSTRAINT FOREIGN KEY (orderId) REFERENCES Orders(orderId),
 		CONSTRAINT FOREIGN KEY (code) REFERENCES Item(code)
 	);
+
+
+	CREATE TABLE UserDetail(
+		userName VARCHAR(50) NOt NULL,
+		password VARCHAR(50) NOT NULL,
+		role VARCHAR(20) NOT NULL,
+		CONSTRAINT PRIMARY KEY (userName)
+	);
