@@ -16,5 +16,4 @@ public interface UserBo {
     
     public ArrayList<UserDTO> getAllUser() throws Exception;
 
-    public ArrayList<UserDTO> getAllUserName() throws Exception;
 }

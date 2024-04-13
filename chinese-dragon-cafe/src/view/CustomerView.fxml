@@ -26,7 +26,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtCustomerID" minWidth="220.0" onAction="#txtCustomerIDOnAction" onKeyReleased="#txtIdOnKeyReleased" prefHeight="38.0" prefWidth="167.0" promptText="Customer ID">
+                  <TextField fx:id="txtCustomerID" minWidth="220.0" onAction="#txtCustomerIDOnAction" onKeyReleased="#txtIdOnKeyReleased" prefHeight="40.0" prefWidth="167.0" promptText="Customer ID">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -40,7 +40,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtCustomerName" minWidth="220.0" onKeyReleased="#txtNameOnKeyReleased" prefHeight="42.0" prefWidth="200.0" promptText="Customer Name">
+                  <TextField fx:id="txtCustomerName" minWidth="220.0" onKeyReleased="#txtNameOnKeyReleased" prefHeight="40.0" prefWidth="200.0" promptText="Customer Name">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtContact" minWidth="220.0" onKeyReleased="#txtContactOnKeyReleased" prefHeight="41.0" prefWidth="200.0" promptText="Contact">
+                  <TextField fx:id="txtContact" minWidth="220.0" onKeyReleased="#txtContactOnKeyReleased" prefHeight="40.0" prefWidth="200.0" promptText="Contact">
                      <font>
                         <Font size="19.0" />
                      </font>
