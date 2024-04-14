@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDAO{
     @Override
     public boolean update(User user) throws Exception {
         return CrudUtil.execute("UPDATE userdetail SET username=?, password=?, role=? WHERE username=?",
-                user.getUsername(), user.getPassword(), user.getRole());
+                user.getUsername(), user.getPassword(), user.getRole(), user.getUsername());
     }
 
     @Override

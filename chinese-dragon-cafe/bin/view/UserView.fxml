@@ -33,7 +33,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUsername" minHeight="40.0" promptText="Username">
+                  <TextField fx:id="txtUsername" minHeight="40.0" onAction="#txtUsernameOnAction" promptText="Username">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -71,11 +71,12 @@
             </HBox>
          </children>
       </VBox>
-      <TableView fx:id="tblUser" layoutX="281.0" layoutY="118.0" prefHeight="349.0" prefWidth="430.0">
+      <TableView fx:id="tblUser" layoutX="269.0" layoutY="118.0" prefHeight="350.0" prefWidth="446.0">
         <columns>
-          <TableColumn fx:id="colUsername" prefWidth="149.60003662109375" text="Username" />
-          <TableColumn fx:id="colPassword" prefWidth="178.39996337890625" text="Password" />
-            <TableColumn fx:id="colRole" prefWidth="102.39996337890625" text="Role" />
+          <TableColumn fx:id="colUsername" prefWidth="151.20001220703125" text="Username" />
+          <TableColumn fx:id="colPassword" prefWidth="141.5999755859375" text="Password" />
+            <TableColumn fx:id="colRole" prefWidth="80.00006103515625" text="Role" />
+            <TableColumn fx:id="colDelete" prefWidth="74.39996337890625" text="Delete" />
         </columns>
       </TableView>
       <HBox layoutX="34.0" layoutY="434.0" prefHeight="31.0" prefWidth="200.0" spacing="20.0">

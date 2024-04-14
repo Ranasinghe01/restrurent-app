@@ -31,7 +31,7 @@ public class SplashViewController {
         initTask.setOnSucceeded(event ->{
             Stage stage = new Stage();
             try {
-                stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/AdminDashboardView.fxml"))));
+                stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/LoginView.fxml"))));
             } catch (IOException e) {
                 throw new RuntimeException();
             }

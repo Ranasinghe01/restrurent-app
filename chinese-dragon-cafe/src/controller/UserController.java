@@ -42,6 +42,9 @@ public class UserController {
     private TableColumn<UserTM, String> colPassword;
 
     @FXML
+    private TableColumn<UserTM, Button> colDelete;
+
+    @FXML
     private RadioButton rdAdmin;
 
     @FXML
@@ -77,6 +80,7 @@ public class UserController {
         colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        colDelete.setCellValueFactory(new PropertyValueFactory<>("btnDelete"));
         
         getUsers();
     }
@@ -127,11 +131,11 @@ public class UserController {
 
                             if(bo.deleteUser(userTM.getUsername())) {
 
-                                Alert alert2 = new Alert(AlertType.CONFIRMATION, "User is Deleted");
+                                Alert alertDeleted = new Alert(AlertType.CONFIRMATION, "User is Deleted");
                                 ButtonType ok2 = new ButtonType("OK", ButtonData.OK_DONE);
-                                alert2.getButtonTypes().addAll(ok2);
+                                alertDeleted.getButtonTypes().setAll(ok2);
 
-                                Optional<ButtonType> result2 = alert2.showAndWait();
+                                Optional<ButtonType> result2 = alertDeleted.showAndWait();
                                 if(result2.isPresent() && result2.get() == ok2) {
 
                                     getUsers();
@@ -141,23 +145,25 @@ public class UserController {
                         }
 
                     } catch (Exception e1) {
-                        Alert alert3 = new Alert(AlertType.ERROR, "Exception" + e1.getMessage());
-                        alert3.show();
+                        new Alert(AlertType.ERROR, "Exception" + e1.getMessage()).show();
                     }
                 });
             }
 
             tblUser.setItems(tmList);
 
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
-            alert.show();
+        } catch (Exception e2) {
+            new Alert(AlertType.ERROR, "Exception" + e2.getMessage()).show();
         }
     }
 
     private boolean validate() {
         
         boolean validate = true;
+
+        for (Node node : vBox.lookupAll(".error")) {
+            node.getStyleClass().remove("error");
+        }
 
         if (grpRole.getSelectedToggle() == null) {
             rdAdmin.getStyleClass().add("error");
@@ -181,11 +187,6 @@ public class UserController {
         }
 
         if (validate) {
-
-            for (Node node : vBox.lookupAll("error")) {
-                node.getStyleClass().remove("error");
-            }
-            
             return validate;
         }
 
@@ -196,77 +197,28 @@ public class UserController {
     void btnSaveOnAction(ActionEvent event) {
 
     if (validate()) {
+
         String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-    try {
-            
-        UserDTO userDTO = new UserDTO(username,
-                password, 
-                ((RadioButton) grpRole.getSelectedToggle()).getText()
-                );
-
-            boolean isSaved = bo.saveUser(userDTO);
-        
-            if (isSaved) {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "User is Saved");
-                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
-                alert.getButtonTypes().setAll(ok);
-
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ok) {
-
-                    getUsers();
-
-                for (TextField textField : new TextField[] {txtUsername, txtPassword}) {
-                    textField.clear();
-                }
-
-                rdAdmin = null;
-                rdUser = null;
-
-                enableUI(false);
-
-                }
-
-            } else {
-                Alert alert = new Alert(AlertType.ERROR, "User is not Saved");
-                alert.show();
-            }
-
-        } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
-            alert.show();
-        }
-    }
-    }
-
-    @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-
-        validate();
-
         try {
-
-            String username = txtUsername.getText();
-            String password = txtPassword.getText();
-
+            
             UserDTO userDTO = new UserDTO(username,
-                    password,
+                    password, 
                     ((RadioButton) grpRole.getSelectedToggle()).getText()
                     );
 
-            boolean isUpdated = bo.updateUser(userDTO);
+                boolean isSaved = bo.saveUser(userDTO);
+        
+                if (isSaved) {
+                    Alert alert = new Alert(AlertType.CONFIRMATION, "User is Saved");
+                    ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                    alert.getButtonTypes().setAll(ok);
 
-            if (isUpdated) {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "User is Updated");
-                ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
-                alert.getButtonTypes().addAll(ok);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ok) {
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ok) {
-                
-                    getUsers();
+                        getUsers();
 
                     for (TextField textField : new TextField[] {txtUsername, txtPassword}) {
                         textField.clear();
@@ -275,17 +227,88 @@ public class UserController {
                     rdAdmin = null;
                     rdUser = null;
 
+                    enableUI(false);
+
+                    }
+
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR, "User is not Saved");
+                    alert.show();
                 }
 
-            }else {
-                Alert alert = new Alert(AlertType.ERROR, "User is not Update");
+            } catch (Exception e) {
+                Alert alert = new Alert(AlertType.ERROR, "Exception" + e.getMessage());
                 alert.show();
+            }
+        }
+    }
+
+    @FXML
+    void txtUsernameOnAction(ActionEvent event) {
+
+        try {
+
+            String username = txtUsername.getText();
+            UserDTO dto = bo.getUser(username);
+
+            if (dto != null) {
+                txtUsername.setText(dto.getUsername());
+                txtPassword.setText(dto.getPassword());
+
+            }else {
+                new Alert(AlertType.ERROR, "User Not Found, Please check the Username and try again !").show();
             }
 
         } catch (Exception e) {
-            Alert alert = new Alert(AlertType.ERROR,"Exception" + e.getMessage());
-            alert.show();
+            new Alert(AlertType.ERROR, "Exception" + e.getMessage()).show();
+        }
+    }
+
+    @FXML
+    void btnUpdateOnAction(ActionEvent event) {
+
+        if (validate()) {
+
+            try {
+
+                String username = txtUsername.getText();
+                String password = txtPassword.getText();
+
+                UserDTO userDTO = new UserDTO(username,
+                        password,
+                        ((RadioButton) grpRole.getSelectedToggle()).getText()
+                        );
+
+                boolean isUpdated = bo.updateUser(userDTO);
+
+                if (isUpdated) {
+                    Alert alert = new Alert(AlertType.CONFIRMATION, "User is Updated !");
+                    ButtonType ok = new ButtonType("OK", ButtonData.OK_DONE);
+                    alert.getButtonTypes().setAll(ok);
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ok) {
+                
+                        getUsers();
+
+                        for (TextField textField : new TextField[] {txtUsername, txtPassword}) {
+                            textField.clear();
+                        }
+
+                        rdAdmin = null;
+                        rdUser = null;
+
+                    }
+
+                }else {
+                    Alert alert = new Alert(AlertType.ERROR, "User is not Updated !");
+                    alert.show();
+                }
+
+            } catch (Exception e) {
+                Alert alert = new Alert(AlertType.ERROR,"Exception" + e.getMessage());
+                alert.show();
+            }
         }
     }   
-
 }
