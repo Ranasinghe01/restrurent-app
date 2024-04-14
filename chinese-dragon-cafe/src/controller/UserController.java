@@ -60,6 +60,9 @@ public class UserController {
     private TextField txtPassword;
 
     @FXML
+    private TextField txtCofirmPwd;
+
+    @FXML
     private TextField txtUsername;
 
     @FXML
@@ -186,6 +189,14 @@ public class UserController {
             validate = false;
         }
 
+        String confirmPwd = txtCofirmPwd.getText();
+        if (!(password.equals(confirmPwd))) {
+            txtPassword.getStyleClass().add("error");
+            txtCofirmPwd.getStyleClass().add("error");
+            txtPassword.requestFocus();
+            validate = false;
+        }
+
         if (validate) {
             return validate;
         }
@@ -220,7 +231,7 @@ public class UserController {
 
                         getUsers();
 
-                    for (TextField textField : new TextField[] {txtUsername, txtPassword}) {
+                    for (TextField textField : new TextField[] {txtUsername, txtPassword, txtCofirmPwd}) {
                         textField.clear();
                     }
 
@@ -291,7 +302,7 @@ public class UserController {
                 
                         getUsers();
 
-                        for (TextField textField : new TextField[] {txtUsername, txtPassword}) {
+                        for (TextField textField : new TextField[] {txtUsername, txtPassword, txtCofirmPwd}) {
                             textField.clear();
                         }
 

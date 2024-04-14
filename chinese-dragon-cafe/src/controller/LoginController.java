@@ -54,6 +54,9 @@ public class LoginController {
                         stage.setResizable(false);
                         stage.show();
                         stage.centerOnScreen();
+
+                    }else {
+                        new Alert(AlertType.ERROR, "Invalid Username or Password !").show();
                     }
             }
 
