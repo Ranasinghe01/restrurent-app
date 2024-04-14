@@ -68,7 +68,7 @@ public class ItemController {
     @FXML
     private HBox btnSaveUpdate;
 
-        @FXML
+    @FXML
     private AnchorPane container;
 
     ItemBo bo;
@@ -176,27 +176,27 @@ public class ItemController {
 
         boolean validate = true;
 
-        for (Node node : vBoxTextFields.lookupAll(".error")) {
+        for (Node node : vBoxTextFields.lookupAll("error")) {
             node.getStyleClass().remove("error");
         }
 
         if (txtQTY.getText().strip().isEmpty()) {
-            txtQTY.setStyle("-fx-border-color:red");
+            txtQTY.getStyleClass().add("error");
             txtQTY.requestFocus();
             validate = false;
         } 
         if (txtUnitPrice.getText().strip().isEmpty()) {
-            txtUnitPrice.setStyle("-fx-border-color:red");
+            txtUnitPrice.getStyleClass().add("error");
             txtUnitPrice.requestFocus();
             validate = false;
         }
         if (txtDescription.getText().isEmpty()) {
-            txtDescription.setStyle("-fx-border-color:red");
+            txtDescription.getStyleClass().add("error");
             txtDescription.requestFocus();
             validate = false;
         }
         if (txtItemCode.getText().isEmpty()) {
-            txtItemCode.setStyle("-fx-border-color:red");
+            txtItemCode.getStyleClass().add("error");
             txtItemCode.requestFocus();
             validate = false;
         }

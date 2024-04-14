@@ -37,23 +37,5 @@ public class MainController {
         stage.centerOnScreen();
 
     }
-    
-    @FXML
-    void btnOrderHistoryOnAction(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/OrderHistoryView.fxml"))));
-        stage.setResizable(false);
-        stage.show();
-        stage.centerOnScreen();
-    }
-    
-    @FXML
-    void btnOrderDetailsHistoryOnAction(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/OrderHistoryDetailsView.fxml"))));
-        stage.setResizable(false);
-        stage.show();
-        stage.centerOnScreen();
-    }
 
 }

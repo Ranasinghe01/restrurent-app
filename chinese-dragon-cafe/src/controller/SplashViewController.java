@@ -23,7 +23,7 @@ public class SplashViewController {
             @Override
             protected Object call() throws Exception {
                
-                Thread.sleep(2000);
+                Thread.sleep(1500);
                 return null;
             }  
         };
@@ -31,7 +31,7 @@ public class SplashViewController {
         initTask.setOnSucceeded(event ->{
             Stage stage = new Stage();
             try {
-                stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/Main.fxml"))));
+                stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("../view/AdminDashboardView.fxml"))));
             } catch (IOException e) {
                 throw new RuntimeException();
             }

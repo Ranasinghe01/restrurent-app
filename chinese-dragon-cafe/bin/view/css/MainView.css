@@ -1,0 +1,6 @@
+.text-field.error{
+    -fx-border-color: red;
+}
+.radio-button.error{
+    -fx-text-fill: #ff0000;
+}

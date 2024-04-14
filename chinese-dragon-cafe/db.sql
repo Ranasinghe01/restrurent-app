@@ -39,7 +39,7 @@ CREATE TABLE Item(
 
 
 	CREATE TABLE UserDetail(
-		userName VARCHAR(50) NOt NULL,
+		username VARCHAR(50) NOt NULL,
 		password VARCHAR(50) NOT NULL,
 		role VARCHAR(20) NOT NULL,
 		CONSTRAINT PRIMARY KEY (userName)

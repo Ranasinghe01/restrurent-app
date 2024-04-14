@@ -11,8 +11,12 @@ import javafx.stage.Stage;
 public class AdminDashboardController {
     
     @FXML
-    void AddNewUserOnAction(ActionEvent event) {
-
+    void AddNewUserOnAction(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/UserView.fxml"))));
+        stage.setResizable(false);
+        stage.show();
+        stage.centerOnScreen();
     }
 
     @FXML

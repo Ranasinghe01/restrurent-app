@@ -4,6 +4,7 @@ import bo.custom.impl.CustomerBoImpl;
 import bo.custom.impl.ItemBoImpl;
 import bo.custom.impl.OrderBoImpl;
 import bo.custom.impl.OrderDetailBoImpl;
+import bo.custom.impl.UserBoImpl;
 
 public class BoFactory {
 
@@ -19,7 +20,7 @@ public class BoFactory {
     }
 
     public enum BoType {
-        CUSTOMER, ITEM, ORDER, ORDER_DETAIL
+        CUSTOMER, ITEM, ORDER, ORDER_DETAIL, USER
     }
 
     @SuppressWarnings("unchecked")
@@ -36,6 +37,9 @@ public class BoFactory {
 
             case ORDER_DETAIL:
                 return (T) new OrderDetailBoImpl();
+
+            case USER:
+                return (T) new UserBoImpl();
 
             default:
                 return null;

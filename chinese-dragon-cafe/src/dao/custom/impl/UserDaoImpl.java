@@ -11,25 +11,25 @@ public class UserDaoImpl implements UserDAO{
 
     @Override
     public boolean save(User user) throws Exception {
-        return CrudUtil.execute("INSERT INTO User VALUES (?, ?, ?)",
+        return CrudUtil.execute("INSERT INTO userdetail VALUES (?, ?, ?)",
                 user.getUsername(), user.getPassword(), user.getRole());
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        return CrudUtil.execute("DELETE FROM User WHERE username=?", id);
+        return CrudUtil.execute("DELETE FROM userdetail WHERE username=?", id);
     }
 
     @Override
     public boolean update(User user) throws Exception {
-        return CrudUtil.execute("UPDATE User SET username=?, password=?, role=? WHERE username=?",
+        return CrudUtil.execute("UPDATE userdetail SET username=?, password=?, role=? WHERE username=?",
                 user.getUsername(), user.getPassword(), user.getRole());
     }
 
     @Override
     public User get(String id) throws Exception {
         
-        ResultSet set = CrudUtil.execute("SELECT * FROM User WHERE username=?", id);
+        ResultSet set = CrudUtil.execute("SELECT * FROM userdetail WHERE username=?", id);
 
         while (set.next()) {
             return new User(
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDAO{
     @Override
     public ArrayList<User> getAll() throws Exception {
         
-        ResultSet set = CrudUtil.execute("SELECT * FROM User");
+        ResultSet set = CrudUtil.execute("SELECT * FROM userdetail");
         ArrayList<User> userList = new ArrayList<>();
 
         while (set.next()) {

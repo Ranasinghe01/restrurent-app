@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="736.0" stylesheets="@css/MainView.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="User Management ">
          <font>
@@ -25,25 +24,43 @@
             <Font size="13.0" />
          </font>
       </Button>
-      <VBox layoutX="36.0" layoutY="118.0" prefHeight="162.0" prefWidth="218.0" spacing="20.0">
+      <VBox fx:id="vBox" layoutX="25.0" layoutY="118.0" prefHeight="162.0" prefWidth="218.0" spacing="20.0">
          <children>
-            <TextField fx:id="txtUsername" minHeight="40.0" promptText="Username">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtPassword" layoutX="10.0" layoutY="10.0" minHeight="40.0" promptText="Password">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="txtConfirmPassword" layoutX="10.0" layoutY="70.0" minHeight="40.0" promptText="Confirm Password">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtUsername" minHeight="40.0" promptText="Username">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtPassword" minHeight="40.0" promptText="Password">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
+                  <Label alignment="CENTER" prefHeight="22.0" prefWidth="8.0" style="-fx-text-fill: red;" text="*">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
                   <RadioButton fx:id="rdAdmin" mnemonicParsing="false" text="Admin">
                      <toggleGroup>
                         <ToggleGroup fx:id="grpRole" />
@@ -54,31 +71,11 @@
             </HBox>
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="119.0" prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="22.0" layoutY="179.0" prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="20.0" layoutY="240.0" prefHeight="40.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="22.0" layoutY="296.0" prefHeight="25.0" prefWidth="14.0" style="-fx-text-fill: red;" text="*">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
       <TableView fx:id="tblUser" layoutX="281.0" layoutY="118.0" prefHeight="349.0" prefWidth="430.0">
         <columns>
-          <TableColumn fx:id="username" prefWidth="149.60003662109375" text="Username" />
-          <TableColumn fx:id="password" prefWidth="178.39996337890625" text="Password" />
-            <TableColumn fx:id="role" prefWidth="102.39996337890625" text="Role" />
+          <TableColumn fx:id="colUsername" prefWidth="149.60003662109375" text="Username" />
+          <TableColumn fx:id="colPassword" prefWidth="178.39996337890625" text="Password" />
+            <TableColumn fx:id="colRole" prefWidth="102.39996337890625" text="Role" />
         </columns>
       </TableView>
       <HBox layoutX="34.0" layoutY="434.0" prefHeight="31.0" prefWidth="200.0" spacing="20.0">
