@@ -46,17 +46,24 @@ public class LoginController {
                     UserDTO user = new UserDTO(userDTO.getUsername(),
                             userDTO.getPassword(),
                             userDTO.getRole());   
-
-                    if ((user.getUsername().equals(username)) && (user.getPassword().equals(password))) {
                         
-                        Stage stage = (Stage) root.getScene().getWindow();
-                        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/AdminDashboardView.fxml"))));
-                        stage.setResizable(false);
-                        stage.show();
-                        stage.centerOnScreen();
+                    if ((user.getUsername().equals(username)) && (user.getPassword().equals(password))) {
 
-                    }else {
-                        new Alert(AlertType.ERROR, "Invalid Username or Password !").show();
+                        if (user.getRole().equals("Admin")) {
+                            
+                            Stage stage = (Stage) root.getScene().getWindow();
+                            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/AdminDashboardView.fxml"))));
+                            stage.setResizable(false);
+                            stage.show();
+                            stage.centerOnScreen();
+    
+                        }else {
+                            Stage stage = (Stage) root.getScene().getWindow();
+                            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/Main.fxml"))));
+                            stage.setResizable(false);
+                            stage.show();
+                            stage.centerOnScreen();
+                        }        
                     }
             }
 

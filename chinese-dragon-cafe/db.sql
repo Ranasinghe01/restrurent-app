@@ -42,5 +42,5 @@ CREATE TABLE Item(
 		username VARCHAR(50) NOt NULL,
 		password VARCHAR(50) NOT NULL,
 		role VARCHAR(20) NOT NULL,
-		CONSTRAINT PRIMARY KEY (userName)
+		CONSTRAINT PRIMARY KEY (username)
 	);
